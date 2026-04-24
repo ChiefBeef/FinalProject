@@ -24,7 +24,7 @@ def emotion_detector(text_to_analyze):
                 dominant_emotion = item
                 dom_emote_label = emotion_labels[index]
             index += 1
-    else:
+    if response.status_code == 400:
         anger = None
         disgust = None
         fear = None

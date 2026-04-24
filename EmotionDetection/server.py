@@ -14,8 +14,6 @@ def detect_route():
             text_to_analyze = request.form.get('textToAnalyze')
     else:
         text_to_analyze = request.args.get('textToAnalyze')
-    if not text_to_analyze or not text_to_analyze.strip():
-        return "Error: please provide an input"
     
     response = emotion_detector(text_to_analyze)
     anger = response.get('anger')
@@ -24,8 +22,10 @@ def detect_route():
     joy = response.get('joy')
     sadness = response.get('sadness')
     dominant_emotion = response.get('dominant emotion')
-    return (f"For the given statement, the system response is 'anger': {anger}, 'disgust': {disgust}, 'fear': {fear}, 'joy': {joy} and 'sadness': {sadness}. The dominant emotion is <b>{dominant_emotion}</b>.")
-
+    if dominant_emotion != None:
+        return (f"For the given statement, the system response is 'anger': {anger}, 'disgust': {disgust}, 'fear': {fear}, 'joy': {joy} and 'sadness': {sadness}. The dominant emotion is <b>{dominant_emotion}</b>.")
+    else:
+        return "<b>Invalid text! Please try again!</b>"
 @app.route("/")
 def render_index_page():
     return render_template("index.html")
